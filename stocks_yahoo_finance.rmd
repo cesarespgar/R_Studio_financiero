@@ -1,0 +1,51 @@
+---
+title: "RStudio_Trading"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#install.packages("quantmod")
+#install.packages("PerformanceAnalytics")
+library(PerformanceAnalytics)
+library(quantmod)
+```
+
+### TELEVISA ###
+
+```{r}
+date <- "2019-1-15"
+tv <- getSymbols.yahoo("TV", from = date)
+
+#auto.assign = F para agregar columna '6' de YahooF con el 'precio ajustado'
+TVClose <- getSymbols.yahoo("TV", from=date,auto.assign=F)[,6]
+TVClose
+```
+
+```{r}
+#Gráfico de Retornos de stock omitiendo NAs
+TVRets <- na.omit(dailyReturn(TVClose, type = "log"))
+
+chartSeries(TVRets)
+```
+
+### TESLA ###
+
+```{r}
+date_tesla <- "2021-1-1"
+tsla <- getSymbols.yahoo("TSLA", from = date_tesla)
+
+#auto.assign = F para agregar columna '6' de YahooF con el 'precio ajustado'
+TeslaClose <- getSymbols.yahoo("TSLA", from=date_tesla,auto.assign=F)[,6]
+TeslaClose
+```
+
+```{r}
+#Gráfico de Retornos de stock omitiendo NAs
+TeslaRets <- na.omit(dailyReturn(TeslaClose, type = "log"))
+
+chartSeries(TeslaRets)
+```
